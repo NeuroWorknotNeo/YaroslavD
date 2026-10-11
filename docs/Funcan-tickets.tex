@@ -1,0 +1,323 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[left=1.8cm,right=1.8cm,top=1.7cm,bottom=1.8cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[unicode,hidelinks]{hyperref}
+\usepackage{titlesec}
+\setlist{nosep,leftmargin=1.4em}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\titleformat{\section}{\large\bfseries\color{blue!40!black}}{\thesection.}{0.5em}{}
+\titlespacing*{\section}{0pt}{10pt}{4pt}
+
+\newcommand{\Lc}{\mathcal L}
+\newcommand{\CC}{\mathbb C}
+\newcommand{\RR}{\mathbb R}
+\newcommand{\DD}{\mathcal D}
+\newcommand{\EE}{\mathcal E}
+\newcommand{\Sc}{\mathcal S}
+\newcommand{\spec}{\operatorname{spec}}
+\newcommand{\Ran}{\operatorname{Ran}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\df}{\textbf{Опр.}~}
+\newcommand{\thm}{\textbf{Теорема.}~}
+\newcommand{\pf}{\textit{Доказательство.}~}
+\newcommand{\idea}{\textit{Идея.}~}
+\newcommand{\qedd}{\hfill$\square$}
+
+\title{\textbf{Функциональный анализ, 6 семестр}\\[2pt]\large Краткие ответы на билеты (лектор А.\,А.~Шкаликов, 2026)}
+\date{}
+\begin{document}
+\maketitle
+\vspace{-8mm}
+\begin{center}\small Всюду $X$ — комплексное банахово, $H$ — гильбертово пространство, $\Lc(X)$ — ограниченные операторы. Пишем $A-\lambda$ вместо $A-\lambda I$.\end{center}
+\tableofcontents
+
+\section{Спектр и резольвента. Замкнутость спектра. Сопряжённый оператор и его спектр}
+\df $\rho(A)=\{\lambda\in\CC:\ A-\lambda$ имеет ограниченный обратный$\}$ — резольвентное множество, $R_A(\lambda)=(A-\lambda)^{-1}$ — резольвента, $\spec A=\CC\setminus\rho(A)$ — спектр.
+
+\textbf{Лемма (ряд Неймана).} $\|A\|<1\Rightarrow 1-A$ обратим, $(1-A)^{-1}=\sum_{k\ge0}A^k$ (сходится по норме), $\|(1-A)^{-1}\|\le(1-\|A\|)^{-1}$.\\
+\pf частичные суммы фундаментальны ($\|\sum_n^mA^k\|\le\sum_n^mq^k$), $\Lc(X)$ полно, а $S_n(1-A)=1-A^{n+1}\to1$. \qedd
+
+\thm $\spec A$ — компакт, $r(A):=\sup_{\lambda\in\spec A}|\lambda|\le\|A\|$.\\
+\pf Если $\mu\in\rho(A)$, то $A-\lambda=(A-\mu)\bigl(1-(\lambda-\mu)(A-\mu)^{-1}\bigr)$ обратим при $|\lambda-\mu|<\|(A-\mu)^{-1}\|^{-1}$ — $\rho(A)$ открыто. При $|\lambda|>\|A\|$: $A-\lambda=-\lambda(1-\lambda^{-1}A)$ обратим. \qedd
+
+\df ($H$ гильбертово) $A^*$: $(Ax,y)=(x,A^*y)$ $\forall x,y$. Корректно по теореме Рисса–Фреше; $A^{**}=A$, $(AB)^*=B^*A^*$.
+
+\thm $\spec A^*=\overline{\spec A}$ (комплексное сопряжение).\\
+\pf $A$ обратим $\Rightarrow$ $A^*(A^{-1})^*=(A^{-1}A)^*=1$, т.е. $(A^*)^{-1}=(A^{-1})^*$. Значит, $\lambda\in\rho(A)\Rightarrow\bar\lambda\in\rho(A^*)$; обратно — из $A^{**}=A$. \qedd
+
+\textbf{Полезно:} $H=\ker A\oplus\overline{\Ran A^*}=\ker A^*\oplus\overline{\Ran A}$ (так как $(\Ran A^*)^\perp=\ker A$). Обратимость $\iff$ $\ker A=0$ и $\Ran A=H$ (Банах); в бесконечномерном случае $\ker A=0$ не влечёт обратимости.
+
+\section{Аналитичность резольвенты. Непустота спектра}
+\df $A(\lambda)$ со значениями в $\Lc(X)$ голоморфна в $\Omega$, если в каждой точке существует предел $\frac{A(\lambda)-A(\mu)}{\lambda-\mu}$ по операторной норме (эквивалентно: $\langle A(\lambda)x,f\rangle$ голоморфны $\forall x,f$).
+
+\textbf{Оценка.} Если $\|(A-\mu)^{-1}\|=c$, то при $|\lambda-\mu|<\frac1{2c}$ имеем $\|(A-\lambda)^{-1}\|\le2c$ (ряд Неймана).
+
+\thm $R_A(\lambda)$ голоморфна на $\rho(A)$, $R_A'(\lambda)=R_A(\lambda)^2$.\\
+\pf \textbf{Тождество Гильберта}: $R(\lambda)-R(\mu)=(\lambda-\mu)R(\lambda)R(\mu)$ (умножить на $A-\lambda$ слева и $A-\mu$ справа). По оценке выше $R(\lambda)$ ограничена около $\mu$, значит $R(\lambda)\to R(\mu)$, и $\frac{R(\lambda)-R(\mu)}{\lambda-\mu}=R(\lambda)R(\mu)\to R(\mu)^2$. \qedd
+
+\thm Спектр любого $A\in\Lc(X)$ непуст.\\
+\pf Пусть $\spec A=\varnothing$. Для $x\ne0$, $f\in X^*$ функция $F(\lambda)=\langle(A-\lambda)^{-1}x,f\rangle$ целая; $\|(A-\lambda)^{-1}\|=\|\lambda^{-1}(1-\lambda^{-1}A)^{-1}\|\to0$ при $|\lambda|\to\infty$. По Лиувиллю $F\equiv0$. Но $(A-\lambda)^{-1}x\ne0$, и по Хану–Банаху есть $f$ с $\langle(A-\lambda)^{-1}x,f\rangle\ne0$. Противоречие. \qedd
+
+\textit{Справочно (не в программе):} формула Гельфанда $r(A)=\varlimsup\|A^n\|^{1/n}$.
+
+\section{Критерий самосопряжённости через квадратичную форму. Вещественность спектра}
+\thm $A=A^*\iff(Ax,x)\in\RR$ $\forall x\in H$.\\
+\pf ($\Rightarrow$) $(Ax,x)=(x,Ax)=\overline{(Ax,x)}$. ($\Leftarrow$) Поляризация:
+$4(Ax,y)=(A(x+y),x+y)-(A(x-y),x-y)+i(A(x+iy),x+iy)-i(A(x-iy),x-iy)$; то же для $4(x,Ay)$ с формами $(z,Az)$. Если все $(Az,z)$ вещественны, то $(Az,z)=(z,Az)$, правые части совпадают, $(Ax,y)=(x,Ay)$. \qedd
+
+\textbf{Лемма.} Если $\|Ax\|\ge\varepsilon\|x\|$ $\forall x$, то $\Ran A$ замкнут; если ещё $\ker A^*=0$, то $A$ обратим.\\
+\pf $Ax_k\to y$ $\Rightarrow$ $\{x_k\}$ фундаментальна $\Rightarrow x_k\to x$, $y=Ax$. Далее $H=\overline{\Ran A}\oplus\ker A^*$ и Банах. \qedd
+
+\thm $A=A^*\Rightarrow\spec A\subset\RR$.\\
+\pf $\lambda=\mu+i\nu$, $\nu\ne0$: $\|(A-\lambda)x\|^2=\|(A-\mu)x\|^2+\nu^2\|x\|^2\ge\nu^2\|x\|^2$ (перекрёстные члены сокращаются, так как $((A-\mu)x,x)\in\RR$). $\ker(A-\lambda)^*=\ker(A-\bar\lambda)=0$, т.к. $\operatorname{Im}((A-\bar\lambda)x,x)=\nu\|x\|^2\ne0$. По лемме $A-\lambda$ обратим. \qedd
+
+\section{Экстремальные значения квадратичной формы и спектр}
+$A=A^*$, $m=\inf_{\|x\|=1}(Ax,x)$, $M=\sup_{\|x\|=1}(Ax,x)$.
+
+\thm $m,M\in\spec A$ и $\spec A\subset[m,M]$. Кроме того, $\|A\|=\max(|m|,|M|)$.\\
+\pf Сдвигом $A\to A-\frac{M+m}2$ сводим к $M=-m$. \textit{Шаг 1: $\|A\|=M$.} $M\le\|A\|$ очевидно. Обратно, для $\lambda>0$
+\[\|Ax\|^2=\tfrac14\Bigl[\bigl(A(\lambda x+\tfrac1\lambda Ax),\lambda x+\tfrac1\lambda Ax\bigr)-\bigl(A(\lambda x-\tfrac1\lambda Ax),\lambda x-\tfrac1\lambda Ax\bigr)\Bigr]\le\tfrac M2\Bigl[\lambda^2\|x\|^2+\tfrac1{\lambda^2}\|Ax\|^2\Bigr];\]
+при $\lambda^2=\|Ax\|/\|x\|$ получаем $\|Ax\|\le M\|x\|$. Значит $\spec A\subset[-M,M]$ (вещественный и в круге $\|A\|$).
+\textit{Шаг 2: $M\in\spec A$.} Берём $\|x_n\|=1$, $(Ax_n,x_n)\ge M-\frac1n$: $\|(A-M)x_n\|^2=\|Ax_n\|^2-2M(Ax_n,x_n)+M^2\le\frac{2M}n\to0$. Нет оценки снизу — $A-M$ необратим. Аналогично $-M$. \qedd
+
+\textbf{Следствия.} Для $A=A^*$: $r(A)=\|A\|$; если $\spec A=\{0\}$, то $A=0$. Спектр может быть любым замкнутым подмножеством $[m,M]$; собственных значений может не быть.
+
+\section{Числовой образ. Теорема Тёплица–Хаусдорфа}
+\df $W(A)=\{(Af,f):\ \|f\|=1\}\subset\CC$ — числовой образ.
+
+\thm (Тёплиц–Хаусдорф) $W(A)$ выпукло.\\
+\pf Пусть $\omega_k=(Af_k,f_k)$, $\|f_k\|=1$, $t\in(0,1)$, $\omega=t\omega_1+(1-t)\omega_2$. Ищем $z$ с $(A(f_1+zf_2),f_1+zf_2)=\omega\|f_1+zf_2\|^2$ и $f_1+zf_2\ne0$ — тогда $\omega\in W(A)$. Раскрывая, получаем $p|z|^2+qz+r\bar z+s=0$ с $p=t(\omega_1-\omega_2)$, $s=(1-t)(\omega_2-\omega_1)$, $s/p=1-1/t<0$. После деления на $p$ и выделения квадратов: $(x+\frac a2)^2+(y+\frac b2)^2+i(cx+dy)=R^2$, $R^2=\frac1t-1+\frac{a^2+b^2}4>\frac{a^2+b^2}4$. Решения — пересечение прямой $cx+dy=0$ (через 0) с окружностью, содержащей $0$ внутри: \textbf{два} решения $z_1\ne z_2$. Хотя бы для одного $f_1+z_kf_2\ne0$ (иначе $(z_1-z_2)f_2=0$). \qedd
+
+\section{Оценка резольвенты вне числового образа}
+\textbf{Лемма 1.} $\|Bx\|\ge\varepsilon\|x\|$ $\forall x$ $\iff$ $\Ran B$ замкнут и у $B$ есть левый обратный $B_1\in\Lc(H)$; при этом $\|B_1\|\le\varepsilon^{-1}$.\\
+\pf ($\Rightarrow$) $\Ran B$ замкнут (фундаментальность прообразов), $H=\Ran B\oplus\ker B^*$; положим $B_1(Bx)=x$, $B_1=0$ на $\ker B^*$. ($\Leftarrow$) $B:H\to\Ran B$ биекция, по Банаху обратный ограничен. \qedd
+
+\textbf{Лемма 2.} $\|Bx\|\ge\varepsilon\|x\|$ и $\|B^*x\|\ge\varepsilon\|x\|$ $\Rightarrow$ $B$ обратим, $\|B^{-1}\|\le\varepsilon^{-1}$.\\
+\pf Левые обратные: $B_1B=1$, $C_1B^*=1$; тогда $BC_1^*=1$ — $C_1^*$ правый обратный, значит $B^{-1}=B_1=C_1^*$. \qedd
+
+\thm $\spec A\subset\overline{W(A)}$ и $\|(A-\lambda)^{-1}\|\le\dfrac1{\dist(\lambda,W(A))}$ при $\lambda\notin\overline{W(A)}$.\\
+\pf $\delta=\dist(\lambda,W(A))$, $\|f\|=1$: $\delta\le|(Af,f)-\lambda|=|((A-\lambda)f,f)|\le\|(A-\lambda)f\|$ и так же $\delta\le\|(A^*-\bar\lambda)f\|$. Применяем лемму 2. \qedd
+
+\section{Теорема Гильберта–Шмидта}
+\thm Спектр компактного самосопряжённого $A$ состоит из вещественных собственных значений; ненулевые имеют конечную кратность, их конечное или счётное число, и в счётном случае $\lambda_k\to0$. Собственные векторы можно выбрать полной ортонормированной системой в $H$.\\
+\pf \textit{Шаг 1.} Для $\mu\in\spec A$ либо $\mu$ — собств. значение, либо есть \textbf{последовательность Вейля} $\|x_n\|=1$, $Ax_n-\mu x_n\to0$ (иначе по лемме из б.3 $A-\mu$ обратим).
+\textit{Шаг 2.} $\mu\ne0$: $\{Ax_n\}$ предкомпактна, выделяем $Ax_{n_k}\to y$, тогда $x_{n_k}\to x=y/\mu$, $\|x\|=1$, $Ax=\mu x$. $\dim\ker(A-\mu)<\infty$ (на нём $A=\mu I$, а $A$ компактен). Собственные подпространства для разных $\mu$ ортогональны. Собств. значений с $|\lambda|>\varepsilon$ конечно (иначе $A$ некомпактен на их сумме).
+\textit{Шаг 3.} Если $H_0$ инвариантно для $A$, то $H_0^\perp$ инвариантно для $A^*=A$. На $H\ominus\bigoplus_kH_{\lambda_k}$ спектр $A$ — только $0$, значит (б.4) $A=0$ там, т.е. это $\ker A$.
+\textit{Шаг 4.} Объединяем ортонормированные базисы в $H_{\lambda_k}$ и в $\ker A$. \qedd
+
+\section{Теорема Фредгольма}
+\thm (альтернатива) $K$ компактен в $H$. Либо $(1+K)f=g$ и $(1+K^*)f=g$ однозначно разрешимы $\forall g$, либо однородные уравнения имеют ненулевые решения, число линейно независимых решений у них конечно и одинаково; тогда $(1+K)f=g$ разрешимо $\iff g\perp\ker(1+K^*)$ (и симметрично).
+
+С учётом $H=\overline{\Ran A}\oplus\ker A^*$ это равносильно:\\
+\thm $A=1+K$: $\Ran A$, $\Ran A^*$ замкнуты, $\dim\ker A=\dim\ker A^*<\infty$.\\
+\pf \textit{1)} $\dim H<\infty$: линейная алгебра ($\operatorname{rank}A=\operatorname{rank}A^*$).
+\textit{2)} $K=\sum_1^n(\cdot,\psi_k)\varphi_k$ конечномерен: $\Lc_m=\operatorname{span}\{\varphi_k,\psi_k\}$ и $\Lc_m^\perp$ инвариантны для $A,A^*$, на $\Lc_m^\perp$ $A=1$ — сводится к п.1.
+\textit{3)} Общий $K$: есть конечномерный $K_n$, $\|K-K_n\|<\frac12$; $B_n=1+K-K_n$ обратим и $1+K=B_n(1+B_n^{-1}K_n)$, где $B_n^{-1}K_n$ конечномерен. Умножение на обратимый оператор не меняет размерностей ядер и замкнутости образов. \qedd
+
+\section{Аналитическая теорема Фредгольма}
+\thm $K(\lambda)$ аналитична в области $\Omega$, значения компактны. Тогда $\dim\ker(1+K(\lambda))$ постоянна в $\Omega$ за исключением изолированных точек (конечное число в каждом компакте). В частности, если $1+K(\lambda_0)$ обратим хотя бы в одной точке, то $1+K(\lambda)$ обратим всюду, кроме изолированных точек $\{\lambda_k\}$.\\
+\pf \textit{Локально.} В точке $\mu$ берём конечномерный $K_n=\sum_1^n(\cdot,\psi_j)\varphi_j$, $\|K(\lambda)-K_n\|<\frac12$ в $U_\varepsilon(\mu)$. $B_n(\lambda)=1+K(\lambda)-K_n$ обратим, $B_n^{-1}(\lambda)$ аналитична (ряд Неймана), $1+K(\lambda)=(1+K_nB_n^{-1}(\lambda))B_n(\lambda)$, и размерности ядер $1+K(\lambda)$ и $1+S_n(\lambda)$, $S_n=K_nB_n^{-1}$, совпадают. $(1+S_n)f=0\Rightarrow f=\sum c_k\varphi_k$, и для $c$ получаем систему с матрицей $\mathcal M(\lambda)=\{\delta_{kj}+(B_n^{-1}(\lambda)\varphi_k,\psi_j)\}$, элементы которой аналитичны. Число решений $n-\operatorname{rank}\mathcal M(\lambda)$; ранг максимален везде, кроме нулей аналитического минора — изолированных точек.
+\textit{Глобально.} Соединяем две точки кривой, покрываем окрестностями, выбираем конечное подпокрытие; на пересечениях размерности совпадают. \qedd
+
+\section{Классификация спектра. $\spec A=\spec_{ess}A\sqcup\spec_dA$ для $A=A^*$}
+\df $A$ \textbf{фредгольмов}, если $\Ran A$ замкнут, $\alpha=\dim\ker A<\infty$, $\beta=\dim\ker A^*<\infty$; $\operatorname{ind}A=\alpha-\beta$.\\
+$\mu$ — \textbf{изолированная} точка спектра, если $A-\lambda$ обратим в проколотой окрестности. Изолированная $\mu$ — \textbf{нормальное собственное значение}, если $\mu-A$ фредгольмов с $\alpha=\beta$. $\spec_dA$ (дискретный спектр) — множество нормальных с.з.; $\spec_{ess}A$ (существенный) — $\{\mu:\ \mu-A$ не фредгольмов$\}$.
+
+\textbf{Другая классификация:} точечный $\sigma_p$: $\ker(\mu-A)\ne0$; спектр сжатия: $\ker(\bar\mu-A^*)\ne0$; предельный: $\Ran(\mu-A)$ не замкнут (части могут пересекаться).
+
+\textbf{Примеры.} Компактный оператор: $\spec_{ess}\subset\{0\}$. Оператор умножения на $x$ в $L_2[0,1]$: спектр $[0,1]$, весь существенный, собственных значений нет. Сдвиг в $\ell_2$: спектр — единичный круг, дискретного спектра нет (в несамосопряжённом случае $\spec_{ess}$ не дополнение к $\spec_d$).
+
+\thm $A=A^*\Rightarrow\spec A=\spec_dA\sqcup\spec_{ess}A$.\\
+\pf Не пересекаются по определению. Пусть $\mu\in\spec A\setminus\spec_{ess}A$: $\dim\ker(\mu-A)=r<\infty$, образ замкнут. Надо: $\mu$ изолирована. Пусть $\{\varphi_k\}_1^r$ — базис $\ker(\mu-A)$, $V=\sum_1^r(\cdot,\varphi_k)\varphi_k$. Тогда $\mu-A+V$ обратим (ядро нулевое, образ $=H$ по разложению $H=\ker\oplus\Ran$), значит, $\lambda-A+V$ обратим в $U_\varepsilon(\mu)$ и
+\[\lambda-A=(1-K(\lambda))(\lambda-A+V),\qquad K(\lambda)=V(\lambda-A+V)^{-1}\ \text{(конечномерен)}.\]
+При невещественных $\lambda$ оба оператора $\lambda-A$, $\lambda-A+V$ обратимы, т.е. $1-K(\lambda)$ обратим. По аналитической теореме Фредгольма $1-K(\lambda)$ необратим лишь в изолированных точках. \qedd
+
+\section{Теорема Рисса о спектре компактного оператора. Теоремы Вейля}
+\thm (Ф.\,Рисс) Спектр компактного $K$ в $H$ (кроме, быть может, нуля) состоит из нормальных собственных значений, которые могут накапливаться только к нулю.\\
+\pf $\lambda-K=\lambda(1-\lambda^{-1}K)$, $\lambda^{-1}K$ аналитична в $\CC\setminus\{0\}$ и компактна; при $|\lambda|>\|K\|$ обратим. Аналитическая теорема Фредгольма: обратим всюду, кроме изолированных точек — нормальных с.з. Накопление возможно только к $0$ (окрестность $\infty$ в $\rho(K)$). \qedd
+
+\thm (Вейль) $A=A^*$, $K$ компактен $\Rightarrow\spec_{ess}(A+K)=\spec_{ess}A$ (спектры совпадают с точностью до нормальных с.з.; невещественный спектр $A+K$ — только нормальные с.з.).\\
+\pf Пусть $\mu\in\rho(A)$. $\lambda-A-K=(\lambda-A)(1-(\lambda-A)^{-1}K)$ при $\lambda\in\rho(A)$; второй множитель обратим при больших $|\lambda|$, а $\rho(A)$ связно ($A=A^*$!). Аналитическая теорема Фредгольма: $\mu\in\rho(A+K)$ или $\mu\in\spec_d(A+K)$. Обратно, если $\mu\in\rho(A+K)$, то $\lambda-A=(\lambda-A-K)(1+(\lambda-A-K)^{-1}K)$ в $U_\varepsilon(\mu)$, второй множитель обратим при невещественных $\lambda$ — значит $\mu\in\rho(A)\cup\spec_d(A)$. \qedd
+
+\textbf{Без самосопряжённости неверно:} правый сдвиг $A$ в $\ell_2(\mathbb Z)$ (спектр — окружность) и $K=(\cdot,e_{-1})e_0$: спектр $A-K$ — весь круг, внутренность — точечный спектр.\\
+\thm (грубый вариант, любой $A\in\Lc(H)$) $\spec A\setminus\sigma_p(A)=\spec(A+K)\setminus\sigma_p(A+K)$ — те же рассуждения с обычной теоремой Фредгольма.
+
+\section[Полинормированные и счётно-нормированные пространства, Фреше. $\EE,\DD,\Sc$]{Полинормированные, счётно-нормированные пространства, Фреше.\\ Пространства $\EE(\Omega)$, $\DD(\Omega)$, $\Sc(\RR^d)$}
+\df Семейство полунорм $\{p_\alpha\}_{\alpha\in\Lambda}$ задаёт топологию: базу окрестностей нуля $U=\{x:\ p_{\alpha_j}(x)<\varepsilon,\ j=1..n\}$ и их сдвиги. Требуем: $p_\alpha(x)=0\ \forall\alpha\Rightarrow x=0$ (хаусдорфовость). Это \textbf{полинормированное} (= локально выпуклое) пространство. Две системы эквивалентны $\iff$ каждая полунорма одной оценивается через $C\cdot$(сумму конечного числа) полунорм другой.\\
+\textbf{Счётно-нормированное}: $\Lambda=\mathbb N$; можно считать $p_n\le p_{n+1}$ (взять $\hat p_n=p_1+\dots+p_n$).\\
+Последовательность \textbf{фундаментальна}, если $p_\alpha(x_n-x_m)\to0$ для каждого $\alpha$. \textbf{Фреше} = полное счётно-нормированное.
+
+\textbf{Пространства основных функций.}
+\begin{itemize}
+\item $\EE(\Omega)=C^\infty(\Omega)$, полунормы $p_n(f)=\sum_{|r|\le n}\max_{K_n}|f^{(r)}|$, $K_s=\{x\in\Omega:\ d(x,\partial\Omega)\ge\frac1s,\ |x|\le s\}$ — исчерпание компактами. Сходимость: равномерная со всеми производными на компактах.
+\item $\Sc(\RR^d)$ (Шварц): $f\in C^\infty$, $|x^kf^{(r)}(x)|\le C_{k,r}$; $p_n(f)=\sup_x\sum_{|k|+|r|\le n}|x^kf^{(r)}(x)|$.
+\item $\DD(\Omega)$: $C^\infty$-функции с компактным носителем в $\Omega$; топология — несчётная система (б.17).
+\end{itemize}
+
+\section{Метризуемость счётно-нормированного пространства}
+\thm Полинормированное $X$ метризуемо $\iff$ его топология задаётся счётной системой полунорм.\\
+\pf ($\Leftarrow$) Для согласованной системы $\{p_n\}$:
+\[d(x,y)=\sum_{n\ge1}2^{-n}\frac{p_n(x-y)}{1+p_n(x-y)}\]
+— метрика (треугольник из $\frac z{1+z}\le\frac x{1+x}+\frac y{1+y}$ при $0\le z\le x+y$). Топологии совпадают: если $p_n(x)<\delta=\varepsilon/2$ и $\sum_{k>n}2^{-k}<\varepsilon/2$, то $d(x,0)<\varepsilon$; обратно, при $d(x,0)<\varepsilon2^{-n-1}$ имеем $2^{-n}\frac{p_n}{1+p_n}<\varepsilon2^{-n-1}$, откуда $p_n(x)<\varepsilon$ ($\varepsilon\le1$).
+($\Rightarrow$) Шары $B_{1/n}$ — счётная база; вкладываем между ними окрестности вида (6.1): $B_{n_{k+2}}\subset V_{k+1}\subset B_{n_{k+1}}$. Функционалы Минковского $p_k$ множеств $V_k$ (выпуклых, уравновешенных, поглощающих) — полунормы, $V_k=\{p_k<1\}$ (б.14). \qedd
+
+\section{Функционал Минковского}
+\df $U$ \textbf{выпукло}; \textbf{уравновешено}: $\alpha U\subset U$ при $|\alpha|\le1$; \textbf{поглощающее}: $\bigcup_{\alpha}\alpha U=X$. Функционал Минковского $p_U(x)=\inf\{\alpha>0:\ \alpha^{-1}x\in U\}$.\\
+\thm $U$ выпукло, уравновешено, поглощающее $\Rightarrow p_U$ — полунорма.\\
+\pf \textit{Однородность:} $\alpha=|\alpha|\theta$, $|\theta|=1$; из уравновешенности $p_U(\alpha x)=|\alpha|p_U(x)$. \textit{Треугольник:} $a>p_U(x)$, $b>p_U(y)$ $\Rightarrow$ $x/a,y/b\in U$, по выпуклости $\frac{x+y}{a+b}=\frac a{a+b}\frac xa+\frac b{a+b}\frac yb\in U$, т.е. $p_U(x+y)\le a+b$. \qedd
+
+\textbf{Вывод:} база окрестностей нуля из выпуклых уравновешенных множеств задаётся полунормами $p_U$ (так любое локально выпуклое пространство полинормировано). Метризуемое полинормированное пространство имеет счётную базу $\{V_k\}$ таких окрестностей, а значит, топология задаётся счётной системой $\{p_{V_k}\}$ — это вторая половина теоремы б.13.
+
+\section{Оценка линейного непрерывного функционала в пространстве Фреше}
+\thm $X$ — Фреше с согласованными полунормами $\{p_n\}$, $f$ — линейный непрерывный функционал. Тогда $\exists n,C$: $|f(x)|\le Cp_n(x)$ $\forall x$.\\
+\pf $f^{-1}(\{|z|<\varepsilon\})$ — открытая окрестность нуля, содержит базисную $V_{n,\delta}=\{p_n(x)<\delta\}$ (полунормы согласованы!). Значит, $p_n(x)<\delta\Rightarrow|f(x)|<\varepsilon$. По однородности: для любого $y$ и $\alpha>\delta^{-1}p_n(y)$ вектор $y/\alpha\in V_{n,\delta}$, $|f(y)|<\alpha\varepsilon$; при $\alpha\downarrow\delta^{-1}p_n(y)$ получаем $|f(y)|\le\frac\varepsilon\delta p_n(y)$. \qedd
+
+\textbf{Роль:} отсюда компактность носителя у $f\in\EE'$ (б.20) и структурная теорема (б.22).
+
+\section{$\EE(\Omega)$ и $\Sc(\RR^d)$ — пространства Фреше}
+Топологии — полунормы из б.12; обе системы счётные и согласованные, значит пространства метризуемы (б.13). Осталось \textbf{полнота}.\\
+\thm $\Sc$ и $\EE(\Omega)$ полны.\\
+\pf ($\Sc$) Пусть $\{f_n\}$ фундаментальна: $\forall\varepsilon,l$ $\exists n_0$: $\sup_x|x^k||f_n^{(r)}-f_m^{(r)}|\le\varepsilon$ при $|k|+|r|\le l$, $n,m>n_0$. При $k=0$ на каждом шаре $|x|\le R$ все $f_n^{(r)}$ сходятся равномерно; по теореме о почленном дифференцировании предел $f\in C^\infty$ и $f_n^{(r)}\to f^{(r)}$. Переходя в неравенстве к пределу $m\to\infty$: $\sup_x|x^k||f_n^{(r)}-f^{(r)}|\le\varepsilon$ ($\varepsilon$ не зависит от $R$). Значит $f_n-f\in\Sc$, $f\in\Sc$ и $f_n\to f$ в $\Sc$. Для $\EE$ — то же на компактах $K_n$. \qedd
+
+\section{Топология в $\DD(\Omega)$, критерий сходимости. Операции в $\DD'(\Omega)$}
+\textbf{Топология.} Для каждой последовательности натуральных $\alpha=(\alpha_1,\alpha_2,\dots)$
+\[p_\alpha(f)=\sum_{s\ge1}\ \sum_{|r|\le\alpha_s}\alpha_s\max_{K_s\setminus K_{s-1}}|f^{(r)}|\qquad(K_0=\varnothing)\]
+(сумма конечна, т.к. $\supp f$ компактен). Система несчётная.
+
+\thm (критерий) $f_n\to f$ в $\DD(\Omega)$ $\iff$ (i) $f_n\to f$ в $\EE(\Omega)$ и (ii) $\exists$ компакт $K\subset\Omega$: $\supp f_n\subset K$ $\forall n$.\\
+\pf ($\Leftarrow$) при (ii) сумма в $p_\alpha$ конечна. ($\Rightarrow$) Если носители не в одном компакте, найдутся $x_n\to\partial\Omega$ с $f_n(x_n)\ne0$; выберем $\alpha_n$ с $|\alpha_nf_n(x_n)|>1$ — тогда $p_\alpha(f_n)\not\to0$. \qedd
+
+\textbf{Обобщённые функции:} $\DD'(\Omega)$, $\Sc'$, $\EE'(\Omega)$ — линейные непрерывные функционалы на $\DD,\Sc,\EE$. При $\Omega=\RR^d$: $\DD\subset\Sc\subset\EE$ (топологии сильнее слева, вложения плотные), поэтому $\DD'\supset\Sc'\supset\EE'$.
+
+\textbf{Операции} (определяются через пробную функцию, для регулярных совпадают с обычными):
+\begin{itemize}
+\item умножение на $a\in\EE(\Omega)$: $\langle af,\varphi\rangle=\langle f,a\varphi\rangle$;
+\item дифференцирование: $\langle D^\alpha f,\varphi\rangle=(-1)^{|\alpha|}\langle f,D^\alpha\varphi\rangle$ — любая о.ф. бесконечно дифференцируема;
+\item гладкая замена $y=y(x)$: $\langle Tf,\varphi\rangle=\langle f,\bigl|\tfrac{\partial x}{\partial y}\bigr|T^{-1}\varphi\rangle$.
+\end{itemize}
+
+\section{Нетривиальность $\DD(\Omega)$. Неметризуемость}
+\textbf{Нетривиальность.} $P(x)=e^{-1/x}$ при $x>0$, $0$ при $x\le0$ — $C^\infty$. $\varphi_\alpha(x)=P(x)P(\alpha-x)\in\DD(\RR)$, $\supp=[0,\alpha]$. $\Phi_\alpha(x)=\int_{-\infty}^x\varphi_\alpha$, $F_\varepsilon(x)=\Phi_\varepsilon(x)\Phi_\varepsilon(1-x)/\Phi_\varepsilon^2(\infty)$: $\supp F_\varepsilon\subset[0,1]$, $0\le F_\varepsilon\le1$, $F_\varepsilon\equiv1$ на $(\varepsilon,1-\varepsilon)$ — «шапочка».\\
+\thm $\DD(\Omega)$ плотно в $L_p(\Omega)$, $1\le p<\infty$ (шапочки приближают индикаторы отрезков, а ступенчатые функции плотны в $L_p$; в $\RR^d$ — произведения шапочек на прямоугольниках).
+
+\thm $\DD(\Omega)$ полно, но неметризуемо (не Фреше).\\
+\pf Полнота — из полноты $\EE$ и критерия б.17. Пусть есть метрика $d$; $\Omega=(a,b)$. Возьмём $f_n\in\DD$, $f_n\ne0$, носители которых уходят к $a$. При фиксированном $n$ $\varepsilon f_n\to0$ при $\varepsilon\to0$, значит есть $\varepsilon_n$ с $d(0,\varepsilon_nf_n)<\frac1n$, т.е. $\varepsilon_nf_n\to0$ в $\DD$. Но носители не лежат в одном компакте — противоречие с критерием. \qedd
+
+\section{Регулярные функции в $\DD'$. Инъективность $L_{1,loc}\to\DD'$. Сингулярные о.ф.}
+\df $f\in L_{1,loc}(\Omega)$, если $f\in L_1(K)$ для любого компакта $K\subset\Omega$.\\
+\thm $\langle f,\varphi\rangle=\int_\Omega f\varphi$ — элемент $\DD'(\Omega)$ (если $\supp f$ компактен — $\EE'$); отображение $L_{1,loc}\to\DD'$ инъективно.\\
+\pf Непрерывность: $|\langle f,\varphi\rangle|\le\|f\|_{L_1(K)}\max|\varphi|\to0$ при сходимости в $\DD$. Инъективность — из леммы:
+
+\textbf{Лемма.} $f\in L_{1,loc}(a,b)$, $\int f\varphi=0$ $\forall\varphi\in\DD$ $\Rightarrow f=0$ п.в.\\
+\pf Для $[c,x]\subset(a,b)$ берём $\varphi_n\in\DD$, $\varphi_n=1$ на $[c+\frac1n,x-\frac1n]$, $0$ вне $[c,x]$, $|\varphi_n|\le1$; $\varphi_n\to\chi_{(c,x)}$. По Лебегу $\int_c^xf=\lim\int f\varphi_n=0$. Первообразная абсолютно непрерывна и $\equiv0$, её производная п.в. равна $f$, т.е. $f=0$ п.в. \qedd
+
+\df О.ф. вида $\int f\varphi$ — \textbf{регулярные}, остальные — \textbf{сингулярные}.\\
+\textbf{Примеры.} $\delta$: $\langle\delta,\varphi\rangle=\varphi(0)$. Главное значение $\frac1x$: $\langle\mathcal P\frac1x,\varphi\rangle=\lim_{\varepsilon\to0}\int_{|x|\ge\varepsilon}\frac{\varphi}{x}=-\int\varphi'(t)\ln|t|\,dt$ (непрерывен).\\
+\textit{$\delta$ сингулярна:} если $\int f\varphi=\varphi(0)$, то для $\varphi$ с носителем в $x<0$ или $x>0$ интеграл $0$, и по лемме $f=0$ п.в. — тогда функционал нулевой. Противоречие.
+
+\section{Носитель о.ф. $\EE'(\Omega)$ = о.ф. с компактным носителем}
+\df $f$ равна нулю в точке $x$, если $\langle f,\varphi\rangle=0$ для всех $\varphi$ с носителем в некоторой окрестности $x$. Множество таких точек $G$ открыто; $\supp f=\Omega\setminus G$.\\
+\thm $\EE'(\Omega)$ = $\{f\in\DD'(\Omega):\ \supp f$ компактен$\}$.\\
+\pf ($\subset$) $\EE$ — Фреше; по б.15 $|\langle f,\varphi\rangle|\le Cp_n(\varphi)$. Для $\varphi$ с носителем в $\Omega\setminus K_n$ $p_n(\varphi)=0$, значит $f=0$ вне $K_n$: $\supp f\subset K_n$.
+($\supset$) $\supp f\subset K$; берём компакт $K_1$ с $K\subset\operatorname{int}K_1$ и $\chi\in\DD$, $\chi=1$ на $K_1$. Тогда $\chi f=f$ в $\DD'$ (так как $\supp((\chi-1)\varphi)\cap K=\varnothing$), и $\langle\tilde f,\varphi\rangle:=\langle f,\chi\varphi\rangle$ — продолжение на $\EE$. Единственно: два продолжения совпадают на плотном $\DD$. \qedd
+
+\section{Существование первообразной обобщённой функции}
+\thm Для любой $g\in\DD'(\RR)$ уравнение $f'=g$ имеет решение, единственное с точностью до константы.\\
+\pf Обозначим $\psi^{(-1)}(x)=\int_{-\infty}^x\psi$. Фиксируем $\varphi_0\in\DD$ с $\int\varphi_0=1$. Любая $\varphi\in\DD$: $\varphi=\psi+\alpha\varphi_0$, $\alpha=\int\varphi$, и тогда $\int\psi=0$, т.е. $\psi^{(-1)}\in\DD$.\\
+\textit{Единственность:} если $f'=0$, то $\langle f,\varphi\rangle=\langle f,\psi\rangle+\alpha\langle f,\varphi_0\rangle=-\langle f',\psi^{(-1)}\rangle+c\int\varphi=\langle c,\varphi\rangle$ — константа.\\
+\textit{Существование:} $\langle g^{(-1)},\varphi\rangle:=-\langle g,\psi^{(-1)}\rangle$, $\psi=\varphi-\bigl(\int\varphi\bigr)\varphi_0$. Линейно и непрерывно: если $\varphi_n\to0$ в $\DD$, то носители в одном компакте и $\psi_n^{(-1)}\to0$ в $\DD$. Проверка: $\langle(g^{(-1)})',\varphi\rangle=-\langle g^{(-1)},\varphi'\rangle=\langle g,\varphi\rangle$ (для $\varphi'$ имеем $\int\varphi'=0$, $\psi=\varphi'$, $\psi^{(-1)}=\varphi$). \qedd
+
+\section{Представление о.ф. с компактным носителем}
+\thm Любая $f\in\DD'(\Omega)$ с компактным носителем представима как $f=g^{(k)}$ — производная конечного порядка от регулярной функции $g$.\\
+\pf ($d=1$, $\supp f\subset(0,1)$.) $f\in\EE'(0,1)$, по б.15
+\[|\langle f,\varphi\rangle|\le Cp_m(\varphi)=C\sum_{k\le m}\max_{[0,1]}|\varphi^{(k)}|.\]
+Для $\varphi\in\DD(0,1)$ по Лагранжу и Коши–Буняковскому $|\varphi^{(k)}(x)|\le|\varphi^{(m)}(\xi)|=\bigl|\int_0^\xi\varphi^{(m+1)}\bigr|\le\|\varphi^{(m+1)}\|_{L_2}$, так что
+\[|\langle f,\varphi\rangle|\le C(m+1)\|\varphi^{(m+1)}\|_{L_2}.\]
+$(\varphi,\psi)_{m+1}=\int\varphi^{(m+1)}\overline{\psi^{(m+1)}}$ — скалярное произведение на $\DD(0,1)$; $f$ продолжается на пополнение $H_0^{m+1}$ как ограниченный функционал. По Риссу $\langle f,\varphi\rangle=(\varphi^{(m+1)},h^{(m+1)})_{L_2}=(-1)^{m+1}\langle g^{(m+1)},\varphi\rangle$, $g=\overline{h^{(m+1)}}\in L_2$. \qedd
+
+\textit{Справочно:} $f\in\Sc'$ — $f=\sum D^l(x^{2s}D^lg)$, а также $f=D^\alpha h$, $h$ непрерывна и растёт не быстрее степени.
+
+\section{Преобразование Фурье: изоморфизм $\Sc\to\Sc$, Планшерель, Фурье в $\Sc'$}
+$(Ff)(\lambda)=\frac1{\sqrt{2\pi}}\int e^{-ix\lambda}f(x)dx$ ($d=1$).\\
+\textbf{Лемма 1.} $F:\Sc\to\Sc$. \pf $D^l(Ff)=F((-ix)^lf)$ — $Ff\in C^\infty$; $F(D^lf)=(i\lambda)^lFf$ (по частям) — $Ff$ быстро убывает. \qedd\\
+\textbf{Лемма 2.} $F^*f=\frac1{\sqrt{2\pi}}\int e^{ix\lambda}f(\lambda)d\lambda$ — сопряжённый в $L_2$, $F^*=F^{-1}$; $F$ — биекция $\Sc\to\Sc$.\\
+\pf Формула обращения $F^*F\varphi=\varphi$ на $\Sc$ (из анализа) $\Rightarrow\|\varphi\|^2=(F^*F\varphi,\varphi)=\|F\varphi\|^2$ — изометрия на плотном $\Sc$, продолжается на $L_2$. С $Jf(x)=f(-x)$: $JF=FJ=F^*$, откуда $FF^*=F^*F=1$. Сюръективность: лемма 1 для $F^{-1}=F^*$. \qedd\\
+\textbf{Непрерывность} $F$ в топологии $\Sc$ — из тех же формул (полунормы $Ff$ оцениваются через полунормы $f$), поэтому $F$ — топологический изоморфизм $\Sc$ на себя.
+
+\thm (Планшерель) $\|Ff\|_{L_2}=\|f\|_{L_2}$, $F$ — унитарный оператор в $L_2$.
+
+\df (Фурье в $\Sc'$) $\langle Ff,\varphi\rangle:=\langle f,F^{-1}\varphi\rangle$, эквивалентно $\langle Ff,F\varphi\rangle=\langle f,\varphi\rangle$ (для $f\in L_2$ совпадает с обычным). Для $\DD'$ корректно определить нельзя.\\
+\textbf{Пример:} $\langle F\delta,F\varphi\rangle=\varphi(0)=\frac1{\sqrt{2\pi}}\int F\varphi$, т.е. $F\delta=\frac1{\sqrt{2\pi}}$.
+
+\section{Свёртка регулярных функций}
+$(f_1*f_2)(x)=\int f_1(x-y)f_2(y)dy$, $f_1,f_2\in L_1(\RR)$. \textbf{Свойства:}
+\begin{enumerate}[label=(\roman*)]
+\item $f_1*f_2\in L_1$, $\|f_1*f_2\|_1\le\|f_1\|_1\|f_2\|_1$ (Фубини: $\iint|f_1(x-y)||f_2(y)|dydx=\|f_1\|\|f_2\|$);
+\item коммутативность (замена $x-y=t$, Фубини);
+\item $(f_1*f_2)'=f_1'*f_2=f_1*f_2'$, если производная суммируема (дифференцирование под интегралом);
+\item $F(f_1*f_2)=\sqrt{2\pi}\,Ff_1\cdot Ff_2$ (замена $x-y=z$ в двойном интеграле).
+\end{enumerate}
+
+\section{Прямые произведения и свёртки о.ф. Фундаментальные решения}
+\textbf{Прямое произведение} $f\in\DD'(\RR^d)$, $g\in\DD'(\RR^n)$: $\langle f\times g,\varphi(x,y)\rangle:=\langle f(x),\langle g(y),\varphi(x,y)\rangle\rangle$. Корректно: $\psi(x)=\langle g(y),\varphi(x,y)\rangle\in\DD(\RR^d)$ (финитна и гладка). Свойства: $f\times g=g\times f$, ассоциативность (для финитных — через представление б.22 и Фубини).
+
+\textbf{Свёртка о.ф.} Для обычных функций $\langle f*g,\varphi\rangle=\int f(y)\int g(\xi)\varphi(y+\xi)d\xi dy=\langle f\times g,\varphi(y+\xi)\rangle$. Но $\varphi(y+\xi)$ не финитна по $(y,\xi)$, нужны условия. Если $f\in\EE'$ (компактный носитель):
+\[\langle f*g,\varphi\rangle=\langle g(y),\psi(y)\rangle,\quad\psi(y)=\langle f(x),\varphi(x+y)\rangle\in\DD.\]
+$\delta*f=f$.
+
+\df $P(D)$ — дифференциальный оператор с постоянными коэффициентами. $\mathcal E$ — \textbf{фундаментальное решение}, если $P(D)\mathcal E=\delta$. Тогда $u=f*\mathcal E$ решает $P(D)u=f$: $P(D)(\mathcal E*f)=(P(D)\mathcal E)*f=\delta*f=f$. Определено с точностью до решения однородного уравнения.\\
+\textbf{Пример:} для $\Delta$ в $\RR^d$: $\mathcal E=\frac1{2\pi}\ln|x|$ ($d=2$), $\mathcal E=-\frac{|x|^{2-d}}{(d-2)\omega_d}$ ($d\ge3$), $\omega_d$ — площадь единичной сферы (в конспекте при $d\ge3$ потерян знак минус).
+
+\section{Теорема Соболева: $W_2^k(\RR^d)\subset C_0(\RR^d)$ при $k>d/2$}
+$W_p^k(\Omega)$ — замыкание гладких функций по норме $\bigl(\sum_{|l|\le k}\int|\varphi^{(l)}|^p\bigr)^{1/p}$ (эквивалентно: все обобщённые производные до порядка $k$ в $L_p$). $C_0$ — непрерывные, убывающие на бесконечности.\\
+\textbf{Лемма 1.} $f\in W_2^k(\RR^d)\iff f\in L_2$ и $|y|^k\hat f(y)\in L_2$ (из $F(D^lf)=(iy)^l\hat f$ и Планшереля).\\
+\textbf{Лемма 2.} $Ff\in L_1\Rightarrow f\in C_0$. \pf $f=JF(Ff)$; для $g\in L_1$ $Fg$ непрерывна (приближение интегралами по компактам) и убывает (приближение функциями из $\Sc$). \qedd\\
+\thm $k>d/2\Rightarrow W_2^k(\RR^d)\subset C_0(\RR^d)$.\\
+\pf Достаточно $\hat f\in L_1$. В шаре $|y|\le1$: $\hat f\in L_2\subset L_1$. Вне шара: $\hat f=g|y|^{-k}$, $g=|y|^k\hat f\in L_2$, а $|y|^{-k}\in L_2(|y|>1)$ при $2k>d$; по Коши–Буняковскому $\hat f\in L_1$. \qedd\\
+\textit{Общая теорема (Соболев, 1938):} $W_p^k\subset C^s$ при $s+\frac dp<k$; $W_p^k\subset L_q$ при $\frac1q\ge\frac1p-\frac kd$, $1<p\le q<\infty$ (в конспекте второе условие записано с опечаткой).
+
+\section{Отображение спектра. Норма операторного полинома}
+\thm $p$ — полином, $A\in\Lc(H)$, $K=\spec A$. Тогда $\spec p(A)=p(K)$.\\
+\pf $p(x)-\lambda=a_n\prod(x-x_j)$, значит $p(A)-\lambda=a_n\prod(A-x_j)$, множители коммутируют. $\lambda\in p(K)\iff$ некоторый $x_j\in K$. Если все $x_j\notin K$ — множители обратимы, $\lambda\notin\spec p(A)$. Если $x_j\in K$, то $A-x_j$ необратим: при нетривиальном ядре ставим его первым справа, при неполном образе — первым слева; произведение необратимо. \qedd
+
+\thm $A=A^*$, $p$ — полином: $\|p(A)\|=\max_{\lambda\in K}|p(\lambda)|=\|p\|_\infty$ (для несамосопряжённых неверно).\\
+\pf $B=(\bar pp)(A)=p(A)^*p(A)$ самосопряжён ($\bar pp$ с вещественными коэффициентами). По б.4 и отображению спектра $\|B\|=\max_{\spec B}|\lambda|=\max_K|\bar pp|=(\max_K|p|)^2$, а $\|p(A)\|^2=\|p(A)^*p(A)\|=\|B\|$. \qedd
+
+\section{Функциональное исчисление непрерывных функций от $A=A^*$}
+\thm $A=A^*$, $K=\spec A$. Существует единственный гомоморфизм $\psi:C(K)\to\Lc(H)$, $\psi(f)=:f(A)$, такой что: (i)–(iii) линейность и мультипликативность $\psi(fg)=\psi(f)\psi(g)$; (iv) $\psi(x)=A$; (v) $\psi(\bar f)=f(A)^*$; (vi) $\spec f(A)=f(K)$; (vii) $\|f(A)\|=\|f\|_\infty$; (viii) $f\ge0\Rightarrow f(A)\ge0$.\\
+\pf На полиномах $\psi(p)=p(A)$ — свойства (i)–(vii) выполнены (б.27), единственность — из (i)–(iv). Полиномы плотны в $C(K)$ (Вейерштрасс), а $\|p(A)\|=\|p\|_\infty$ — изометрия, поэтому $\psi$ продолжается: $f(A)=\lim p_n(A)$ при $p_n\rightrightarrows f$ (предел не зависит от выбора). (viii): $f=g^2$, $g\ge0$ непрерывна, $g(A)$ самосопряжён, $f(A)=g(A)^2\ge0$.\\
+(vi): если $\lambda\notin f(K)$, то $(f-\lambda)^{-1}\in C(K)$ и $\psi((f-\lambda)^{-1})$ — обратный к $f(A)-\lambda$. Если $\lambda=f(x_0)$, $x_0\in K$: берём полином $p$, $\|p-f\|<\varepsilon/2$, $p(x_0)=f(x_0)$; тогда $p(A)-\lambda=q(A)(A-x_0)$, а для $x_0\in\spec A$ есть $\|\varphi\|=1$ с малым $\|(A-x_0)\varphi\|$ (последовательность Вейля), откуда $\|(f(A)-\lambda)\varphi\|<\varepsilon$ — нет оценки снизу, $\lambda\in\spec f(A)$. \qedd
+
+\textbf{Следствия.} $f(A)$ и $g(A)$ коммутируют. $A\ge0\Rightarrow\exists!\ B=\sqrt A\ge0$, $B^2=A$.
+
+\section{Сильный предел монотонной последовательности операторов}
+\thm $A_n=A_n^*$, $A_n\le A_{n+1}$, $\|A_n\|\le C$ $\Rightarrow$ существует сильный предел $A_nx\to Ax$, $A=A^*$.\\
+\pf \textit{1.} Для $B\ge0$: $|(Bx,y)|^2\le(Bx,x)(By,y)$ (как Коши–Буняковский: $(B(x+\lambda y),x+\lambda y)\ge0$ при $\lambda=-te^{i\theta}$).
+\textit{2.} Б.о.о. $0\le A_n\le1$. Для $m>n$, $B=A_m-A_n$, $0\le B\le1$, $\|B\|\le1$:
+\[\|A_mx-A_nx\|^4=(Bx,Bx)^2\le(Bx,x)(B^2x,Bx)\le(Bx,x)\|x\|^2=((A_m-A_n)x,x)\|x\|^2.\]
+Числа $(A_nx,x)$ не убывают и ограничены — сходятся; значит $\{A_nx\}$ фундаментальна, $A_nx\to Ax$. $A$ линеен, ограничен, $(Ax,x)\in\RR$, значит $A=A^*$. \qedd
+
+\section{Спектральные проекторы. Спектральная теорема (схема)}
+$A=A^*$, $\spec A\subset[m,M]$. \textbf{Цель:} определить $E_\mu=e_\mu(A)$, $e_\mu=\chi_{[m,\mu]}$ (функция разрывная — исчисление б.28 не годится).
+
+\textbf{Построение.} Есть монотонно убывающая последовательность вещественных полиномов $p_n\downarrow e_\mu$ поточечно на $[m,M]$ (графики в «зигзагообразных полосках» ширины $\frac1n$ над $e_\mu$). По (viii) $p_n(A)$ — монотонная ограниченная последовательность, по б.29 сильно сходится к $E_\mu:=e_\mu(A)$ (не зависит от выбора $p_n$). Свойства:
+\begin{itemize}
+\item $p_n^2\to e_\mu^2=e_\mu$ $\Rightarrow$ $E_\mu^2=E_\mu$, $E_\mu^*=E_\mu$ — \textbf{ортопроекторы};
+\item $E_\nu\ge E_\mu$ при $\nu\ge\mu$ (так как $e_\nu-e_\mu\ge0$), $E_\mu E_\nu=E_\mu$ при $\mu\le\nu$;
+\item $E_\mu$ сильно непрерывна слева по $\mu$; $E_{m-0}=0$, $E_M=I$.
+\end{itemize}
+
+\textbf{Спектральная теорема.} $(E_\mu x,x)$ задаёт $\sigma$-аддитивную меру, и
+\[(Ax,x)=\int_{m-0}^M\mu\,d(E_\mu x,x),\qquad A=\int_{m-0}^M\mu\,dE_\mu .\]
+Смысл: для разбиения $\mu_0<m<\mu_1<\dots<\mu_n=M$, $\xi_k\in[\mu_{k-1},\mu_k]$, из $\mu(e_\nu-e_\mu)\le\lambda(e_\nu-e_\mu)\le\nu(e_\nu-e_\mu)$ получаем $\mu(E_\nu-E_\mu)\le A(E_\nu-E_\mu)\le\nu(E_\nu-E_\mu)$; суммируя,
+\[\Bigl\|A-\sum_k\xi_k(E_{\mu_k}-E_{\mu_{k-1}})\Bigr\|\le\max(\mu_k-\mu_{k-1}),\]
+т.е. $A$ — предел по норме интегральных сумм. Так как $E_{\mu_k}-E_{\mu_{k-1}}$ — взаимно ортогональные проекторы, $A^r=\int\mu^rdE_\mu$, далее для полиномов и (Вейерштрасс) для непрерывных: $f(A)=\int_{m-0}^Mf(\mu)\,dE_\mu$. Через интеграл Лебега–Стилтьеса — для всех ограниченных борелевских $f$.
+
+\end{document}
